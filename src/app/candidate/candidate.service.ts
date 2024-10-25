@@ -33,7 +33,11 @@ export class CandidateService {
   }
 
   searchCandidates(jmbg: string, email: string, employedAfterCompetition: boolean): Observable<Candidate[]> {
-    const params = { jmbg, email, employedAfterCompetition: employedAfterCompetition.toString() };
+    const params: any = {};
+    if (jmbg) params.jmbg = jmbg;
+    if (email) params.email = email;
+    params.employedAfterCompetition = employedAfterCompetition;
+
     return this.http.get<Candidate[]>(`${this.apiUrl}/search`, { params });
   }
 

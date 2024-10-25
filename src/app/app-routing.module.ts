@@ -7,12 +7,12 @@ import { DeleteCandidateComponent } from './candidate/delete-candidate/delete-ca
 import { SearchCandidateComponent } from './candidate/search-candidate/search-candidate.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'candidates', pathMatch: 'full' },
   { path: 'candidates', component: CandidateListComponent },
   { path: 'add', component: AddCandidateComponent },
   { path: 'update/:id', component: UpdateCandidateComponent },
   { path: 'delete/:id', component: DeleteCandidateComponent },
-  { path: 'search', component: SearchCandidateComponent }
+  { path: 'search', component: SearchCandidateComponent },
+  { path: '', redirectTo: 'candidates', pathMatch: 'full' }
 ];
 
 @NgModule({

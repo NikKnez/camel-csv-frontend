@@ -25,6 +25,16 @@ export class CandidateListComponent {
     });
   }
 
+  deleteCandidate(id: number) {
+    if (confirm('Are you sure you want to delete this candidate?')) {
+      this.candidateService.delete(id).subscribe(() => {
+        this.loadAllCandidates();
+      }, error => {
+        console.error('Error deleting candidate:', error);
+      });
+    }
+  }
+
   searchCandidates() {
     let params: any = {};
 
@@ -54,7 +64,11 @@ export class CandidateListComponent {
       const a = document.createElement('a');
       a.href = url;
       a.download = 'candidates.csv';
+      document.body.appendChild(a);
+      a.target = '_blank';
       a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     }, error => {
       console.error('Error downloading CSV:', error);
     });
