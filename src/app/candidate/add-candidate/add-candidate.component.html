@@ -1,0 +1,39 @@
+<form (ngSubmit)="addCandidate()">
+  <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" class="form-control" [(ngModel)]="candidate.firstName" name="firstName" required />
+  </div>
+  <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" class="form-control" [(ngModel)]="candidate.lastName" name="lastName" required />
+  </div>
+  <div class="form-group">
+      <label for="jmbg">JMBG</label>
+      <input type="text" id="jmbg" class="form-control" [(ngModel)]="candidate.jmbg" name="jmbg" required />
+      <div *ngIf="jmbgError" style="color:red;">{{ jmbgError }}</div>
+  </div>
+  <div class="form-group">
+      <label for="yearOfBirth">Year of Birth</label>
+      <input type="number" id="yearOfBirth" class="form-control" [(ngModel)]="candidate.yearOfBirth" name="yearOfBirth" required />
+  </div>
+  <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control" [(ngModel)]="candidate.email" name="email" required />
+      <div *ngIf="emailError" style="color:red;">{{ emailError }}</div>
+  </div>
+  <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" class="form-control" [(ngModel)]="candidate.phone" name="phone" />
+  </div>
+  <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea id="notes" class="form-control" [(ngModel)]="candidate.notes" name="notes"></textarea>
+  </div>
+  <div class="form-group">
+      <label>
+          <input type="checkbox" [(ngModel)]="candidate.employedAfterCompetition" name="employedAfterCompetition" />
+          Employed After Competition
+      </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Add Candidate</button>
+</form>

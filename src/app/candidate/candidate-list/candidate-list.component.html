@@ -1,0 +1,41 @@
+<form (ngSubmit)="searchCandidates()">
+  <div>
+    <label for="jmbg">JMBG</label>
+    <input type="text" [(ngModel)]="jmbg" name="jmbg" minlength="13" maxlength="13" required />
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="email" [(ngModel)]="email" name="email" />
+  </div>
+
+  <div>
+    <label for="employedAfterCompetition">Employed After Competition</label>
+    <input type="checkbox" [(ngModel)]="employedAfterCompetition" name="employedAfterCompetition" />
+  </div>
+
+  <button type="submit">Search</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>JMBG</th>
+      <th>Employed After Competition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let candidate of candidates">
+      <td>{{ candidate.firstName }}</td>
+      <td>{{ candidate.lastName }}</td>
+      <td>{{ candidate.email }}</td>
+      <td>{{ candidate.jmbg }}</td>
+      <td>{{ candidate.employedAfterCompetition }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="downloadCsv()">Download CSV</button>

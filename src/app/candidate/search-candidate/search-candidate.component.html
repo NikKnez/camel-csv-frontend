@@ -1,0 +1,27 @@
+<form (ngSubmit)="searchCandidates()">
+  <div>
+    <label>JMBG:</label>
+    <input type="text" [(ngModel)]="jmbg" name="jmbg" minlength="13" maxlength="13" />
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="email" name="email" />
+  </div>
+  <div>
+    <label>Employed After Competition:</label>
+    <input type="checkbox" [(ngModel)]="employedAfterCompetition" name="employedAfterCompetition" />
+  </div>
+  <button type="submit">Search</button>
+</form>
+
+<div *ngIf="candidates.length > 0">
+  <h3>Search Results:</h3>
+  <ul>
+    <li *ngFor="let candidate of candidates">
+      {{ candidate.firstName }} {{ candidate.lastName }} - {{ candidate.email }}
+    </li>
+  </ul>
+</div>
+<div *ngIf="candidates.length === 0">
+  <p>No candidates found.</p>
+</div>
