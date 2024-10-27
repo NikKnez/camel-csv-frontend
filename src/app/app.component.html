@@ -1,11 +1,11 @@
-<nav>
-  <ul>
-    <li><a routerLink="/candidates">Candidate List</a></li>
-    <li><a routerLink="/add">Add Candidate</a></li>
-    <li><a routerLink="/search">Search Candidate</a></li>
-  </ul>
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="navbar-nav mr-auto">
+    <li class="nav-item"><a class="nav-link" routerLink="/candidates">Candidate List</a></li>
+    <li class="nav-item"><a class="nav-link"routerLink="/add">Add Candidate</a></li>
+    <li class="nav-item"><a class="nav-link" routerLink="/search">Search Candidate</a></li>
+  </div>
 </nav>
 
-<div class="content">
+<div class="container mt-3">
   <router-outlet></router-outlet>
 </div>
