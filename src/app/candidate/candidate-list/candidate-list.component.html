@@ -1,25 +1,64 @@
-<form (ngSubmit)="searchCandidates()">
-  <div>
+<form (ngSubmit)="searchCandidates()" class="mb-4">
+  <div class="form-group mt-4">
+    <label for="searchType">Search By</label>
+    <select id="searchType" class="form-control" [(ngModel)]="searchType" name="searchType" (ngModelChange)="resetSearch()" required>
+      <option value="">Select...</option>
+      <option value="jmbg">JMBG</option>
+      <option value="email">Email</option>
+      <option value="employedAfterCompetition">Employed After Competition</option>
+    </select>
+  </div>
+
+  <div class="form-group mt-4" *ngIf="searchType === 'jmbg'">
     <label for="jmbg">JMBG</label>
-    <input type="text" [(ngModel)]="jmbg" name="jmbg" minlength="13" maxlength="13" required />
+    <input type="text" class="form-control" [(ngModel)]="jmbg" name="jmbg" minlength="13" maxlength="13" required placeholder="Enter 13-digit JMBG"/>
+    <small *ngIf="jmbg && jmbg.length !== 13" class="text-danger">
+      JMBG must contain exactly 13 numbers.
+    </small>
   </div>
 
-  <div>
+  <div class="form-group mt-4" *ngIf="searchType === 'email'">
     <label for="email">Email</label>
-    <input type="email" [(ngModel)]="email" name="email" />
+    <input type="email" class="form-control" [(ngModel)]="email" name="email" required placeholder="Enter a valid email" />
+    <small *ngIf="email && !validateEmail(email)" class="text-danger">
+      Please enter a valid email address.
+    </small>
   </div>
 
-  <div>
-    <label for="employedAfterCompetition">Employed After Competition</label>
-    <input type="checkbox" [(ngModel)]="employedAfterCompetition" name="employedAfterCompetition" />
+  <div class="form-group mt-4" *ngIf="searchType === 'employedAfterCompetition'">
+    <label class="form-check-label">Employed After Competition:</label>
+    <div class="form-check">
+      <input type="radio" id="yes" class="form-check-input" [(ngModel)]="employmentStatus" [value]="'yes'" name="employmentStatus" />
+      <label class="form-check-label" for="yes">Yes</label>
+    </div>
+    <div class="form-check">
+      <input type="radio" id="no" class="form-check-input" [(ngModel)]="employmentStatus" [value]="'no'" name="employmentStatus" />
+      <label class="form-check-label" for="no">No</label>
+    </div>
   </div>
 
-  <button class="btn btn-primary" type="submit">Search</button>
+  <button class="btn btn-primary mt-4 button-spacing" type="submit">Search</button>
+
 </form>
 
-<table>
-  <thead>
-    <tr>
+<div *ngIf="errorMessage" class="alert alert-danger mt-4">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<button class="btn btn-danger button-spacing" (click)="resetButton()">Reset Search</button>
+
+<button class="btn btn-primary ml-2" (click)="toggleCandidateList()">
+  {{ showAllCandidates ? 'Close List' : 'Show List' }}
+</button>
+
+<div>
+  <button class="btn btn-primary mt-3 button-spacing" (click)="downloadAllCandidates()">Download All Candidates CSV</button>
+  <button class="btn btn-primary mt-3" [disabled]="!hasSearchCriteria()" (click)="downloadFilteredCandidates()" *ngIf="isSearchPerformed">Download Filtered Candidates CSV</button>
+</div>
+
+<table class="table table-striped table-hover table-bordered mt-4" *ngIf="showAllCandidates">
+  <thead class="thead-dark">
+    <tr class="text-center">
       <th>First Name</th>
       <th>Last Name</th>
       <th>Email</th>
@@ -28,14 +67,21 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let candidate of candidates">
+    <tr class="text-center" *ngFor="let candidate of candidates">
       <td>{{ candidate.firstName }}</td>
       <td>{{ candidate.lastName }}</td>
       <td>{{ candidate.email }}</td>
       <td>{{ candidate.jmbg }}</td>
-      <td>{{ candidate.employedAfterCompetition }}</td>
+      <td><strong><span [ngClass]="{ 'text-green': candidate.employedAfterCompetition, 'text-red': !candidate.employedAfterCompetition }">
+        {{ candidate.employedAfterCompetition ? 'Yes' : 'No' }}
+      </span></strong>
+      <td>
+        <button class="btn btn-info btn-sm button-spacing" [routerLink]="['/candidates/details', candidate.id]">Details</button>
+        <button class="btn btn-warning btn-sm button-spacing" [routerLink]="['/candidates/update', candidate.id]">Update</button>
+        <button class="btn btn-danger btn-sm" [routerLink]="['/candidates/delete', candidate.id]">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>
 
-<button class="btn btn-primary" (click)="downloadCsv()">Download CSV</button>
+

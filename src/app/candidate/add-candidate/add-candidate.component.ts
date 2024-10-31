@@ -16,8 +16,8 @@ export class AddCandidateComponent {
         email: '',
         phone: '',
         notes: '',
-        employedAfterCompetition: false,
-        dataUpdate: new Date()
+        employedAfterCompetition: null,
+        dataUpdate: new Date(),
     };
 
     emailError: string | null = null;

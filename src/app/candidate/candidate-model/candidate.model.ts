@@ -7,6 +7,6 @@ export interface Candidate {
   email: string;
   phone?: string;
   notes?: string;
-  employedAfterCompetition?: boolean;
+  employedAfterCompetition?: boolean | null | undefined;
   dataUpdate?: Date;
 }

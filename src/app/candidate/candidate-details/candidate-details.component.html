@@ -1,0 +1,11 @@
+<div *ngIf="candidate" class="candidate-details">
+  <button class="btn btn-primary" (click)="goBack()">← Back to List</button>
+  <h2>Candidate Details</h2>
+  <p><strong>Name:</strong> {{ candidate.firstName }}</p>
+  <p><strong>Last Name:</strong> {{ candidate.lastName }}</p>
+  <p><strong>JMBG:</strong> {{ candidate.jmbg }}</p>
+  <p><strong>Email:</strong> {{ candidate.email }}</p>
+  <p><strong>Phone:</strong> {{ candidate.phone }}</p>
+  <p><strong>Notes:</strong> {{ candidate.notes }}</p>
+  <p><strong>Employed After Competition:</strong> {{ candidate.employedAfterCompetition ? 'Yes' : 'No' }}</p>
+</div>

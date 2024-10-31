@@ -16,7 +16,7 @@ export class UpdateCandidateComponent implements OnInit {
     email: '',
     phone: '',
     notes: '',
-    employedAfterCompetition: false,
+    employedAfterCompetition: null,
     dataUpdate: new Date(),
   };
   id!: number;
@@ -31,23 +31,35 @@ export class UpdateCandidateComponent implements OnInit {
     this.getCandidate();
   }
 
+  isLoading = true;
+
   getCandidate(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = id;
     this.candidateService.get(id).subscribe({
       next: (candidate) => {
-        this.candidate = candidate; // Assign the fetched candidate data to the candidate object
+        this.candidate = candidate;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error fetching candidate:', error);
+        this.isLoading = false;
       }
     });
   }
 
+  confirmUpdate(): void {
+    if (window.confirm('Are you sure you want to update this candidate?')) {
+      this.updateCandidate();
+    }
+  }
+
   updateCandidate(): void {
+    this.candidate.dataUpdate = new Date();
     this.candidateService.update(this.id, this.candidate).subscribe({
       next: (response) => {
         console.log('Candidate updated:', response);
-        this.router.navigate(['/candidates']); // Redirect after successful update
+        this.router.navigate(['/candidates']);
       },
       error: (error) => {
         console.error('Error updating candidate:', error);
